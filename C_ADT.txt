@@ -1,0 +1,148 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct ADT{
+    int front;
+    int back;
+    int size;
+    int cap;
+    int *A;
+};
+
+void createADT(struct ADT *A, int val){
+    A->front = 0;
+    A->back = 0;
+    A->size = 0;
+    A->cap = val;
+    A->A = (int*)malloc(sizeof(int) * A->cap);
+}
+
+void appendADT(struct ADT *A, int val){
+    if(A->size < A->cap){
+        A->back += 1;
+        A->A[A->size] = val;
+        A->size += 1;
+    }else{
+        printf("cannot append more");
+    }
+}
+
+void popADT(struct ADT *A){
+    if(A->size > 0){
+        A->back -= 1;
+        A->A[A->size - 1] = 0;
+        A->size -= 1;
+    }else{
+        printf("array empty");
+    }
+}
+
+void shiftADT(struct ADT *A, int val){
+    if(A->size < A->cap){
+        for(int i = A->back; i > 0; i--){
+            A->A[i] = A->A[i - 1];
+        }
+        A->back += 1;
+        A->A[A->front] = val;
+        A->size += 1;
+    }else{
+        printf("cannot shift more");
+    }
+}
+
+void unshiftADT(struct ADT *A){
+    if(A->size > 0){
+        for(int i = A->front; i < A->size; i++){
+            A->A[i] = A->A[i + 1];
+        }
+        A->back -= 1;
+        A->size -= 1;
+    }else{
+        printf("cannot unshift more");
+    }
+}
+
+void insertAtADT(struct ADT *A, int val, int pos){
+    if(A->size < A->cap && pos <= A->size){
+        if(pos == 0){
+            shiftADT(A, val);
+        }else if(pos == A->size){
+            appendADT(A, val);
+        }else{
+            int i = 0;
+            
+            for(i = A->back; i > pos; i--){
+                A->A[i] = A->A[i - 1];
+            }
+            
+            A->back += 1;
+            A->A[i] = val;
+            A->size += 1;
+        }
+    }else{
+        printf("List Is Full or Overflow");
+    }
+}
+
+void deleteAtADT(struct ADT *A, int pos){
+    if(A->size > 0 && pos < A->size){
+        if(pos == 0){
+            unshiftADT(A);
+        }else if(pos == A->size){
+            popADT(A);
+        }else{
+            for(int i = pos; i < A->size; i++){
+                A->A[i] = A->A[i + 1];
+            }
+            A->back -= 1;
+            A->size -= 1;
+        }
+    }else{
+        printf("List Is Empty or Index out of Bounds");
+    }
+}
+
+void displayADT(struct ADT *A){
+    for(int i = 0; i < A->cap; i++){
+        printf("%d", *((*A).A + i));
+    }
+}
+
+void reverseADT(struct ADT *A){
+    struct ADT B;
+    createADT(&B, A->cap);
+    
+    //printf(" %d ", A->size);
+    
+    for(int i = A->size + 1; i > 0; i--){
+        printf(" %d ", A->A[i]);
+        appendADT(&B, A->A[i]);
+    }
+    
+    displayADT(&B);
+    
+    for(int i = 0; i < B.size; i++){
+        A->A[i] = B.A[i];
+    }
+}
+
+int main()
+{
+    struct ADT A;
+    
+    createADT(&A, 5);
+    
+    insertAtADT(&A, 5, 0);
+    insertAtADT(&A, 2, 0);
+    insertAtADT(&A, 3, 2);
+    insertAtADT(&A, 9, 1);
+    //insertAtADT(&A, 9, 1);
+    insertAtADT(&A, 8, 0);
+    displayADT(&A);
+    printf(" ");
+    reverseADT(&A);
+    printf(" ");
+    displayADT(&A);
+
+    return 0;
+}
