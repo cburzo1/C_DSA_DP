@@ -112,14 +112,14 @@ void reverseADT(struct ADT *A){
     struct ADT B;
     createADT(&B, A->cap);
     
-    //printf(" %d ", A->size);
+    //printf(" %d ", A->A[0]);
     
-    for(int i = A->size + 1; i > 0; i--){
-        printf(" %d ", A->A[i]);
+    for(int i = A->size - 1; i >= 0; i--){
+        //printf(" %d ", A->A[i]);
         appendADT(&B, A->A[i]);
     }
     
-    displayADT(&B);
+    //displayADT(&B);
     
     for(int i = 0; i < B.size; i++){
         A->A[i] = B.A[i];
