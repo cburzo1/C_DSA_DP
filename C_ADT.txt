@@ -124,6 +124,52 @@ void reverseADT(struct ADT *A){
     for(int i = 0; i < B.size; i++){
         A->A[i] = B.A[i];
     }
+    /*We can also use a while loop to control two pointers*/
+}
+
+void bubbleSort(struct ADT *A){
+    for(int i = A->size - 1; i >= 0; i--){
+        //printf(" %d ", A->A[i]);
+        for(int j = 0; j < i; j++){
+            if(A->A[j + 1] < A->A[j]){
+                int temp = A->A[j];
+                A->A[j] = A->A[j + 1];
+                A->A[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void selectionSort(struct ADT *A){
+    for(int i = 0; i < A->size; i++){
+        int smallest = i;
+        for(int j = i + 1; j < A->size; j++){
+            if(A->A[j] < A->A[smallest]){
+                smallest = j;
+            }
+        }
+        int temp = A->A[i];
+        A->A[i] = A->A[smallest];
+        A->A[smallest] = temp;
+    }
+}
+
+void insertionSort(struct ADT *A){
+    for(int i = 1; i < A->size; i++){
+        int current = A->A[i];
+        int j;
+        for(j = i - 1; j >= 0 && A->A[j] > current; j--){
+            A->A[j + 1] = A->A[j];
+        }
+        A->A[j + 1] = current;
+    }
+}
+
+//Here, instead of mutating the array like we have been doing we are going to 
+//try to return a new array. We will create two ADT objects and return a 
+// new structure merged.
+struct ADT merge(){
+    
 }
 
 int main()
@@ -140,8 +186,9 @@ int main()
     insertAtADT(&A, 8, 0);
     displayADT(&A);
     printf(" ");
-    reverseADT(&A);
-    printf(" ");
+    //bubbleSort(&A);
+    //selectionSort(&A);
+    insertionSort(&A);
     displayADT(&A);
 
     return 0;
