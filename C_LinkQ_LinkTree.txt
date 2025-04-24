@@ -15,6 +15,8 @@ struct QNode{
 void enQ(struct TNode *val){
     struct QNode *newNode = (struct QNode*)malloc(sizeof(struct QNode));
     
+    newNode->data = val;
+    
     if(head == NULL){
         head = newNode;
         tail = newNode;
@@ -28,11 +30,11 @@ struct TNode *dQ(){
     if(head == NULL){
         printf("Empty!");
     }else{
-        struct QNode *oldHead = head;
+        struct TNode *oldHead = head->data;
         
         head = head->next;
-        oldHead = NULL;
-        free(oldHead);
+        
+        return oldHead;
     }
 }
 
@@ -42,6 +44,32 @@ int Empty(){
     }else{
         return 0;
     }
+}
+
+void addToTree(int val){
+    struct TNode *newNode = (struct TNode*)malloc(sizeof(struct TNode));
+    
+    newNode->data = val;
+    
+    if(root == NULL){
+        root = newNode;
+    }else{
+        while(Empty() != 0){
+            struct TNode *p = dQ();
+            
+            if(p->lch == NULL){
+                p->lch = newNode;
+                break;
+            }else{
+                p->rch = newNode;
+                break;
+            }
+        }
+    }
+}
+
+void displayT(){
+    p
 }
 
 void displayQ(){
@@ -55,7 +83,9 @@ void displayQ(){
 
 int main()
 {
+    int a = 5;
     
+    addToTree(a);
 
     return 0;
 }
