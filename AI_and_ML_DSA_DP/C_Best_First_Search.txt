@@ -1,0 +1,6 @@
+struct Node{
+	int state;
+	struct Node *parent;
+	int action; //A set of actions represented by unique integer, perhaps?
+	int path_cost;
+};

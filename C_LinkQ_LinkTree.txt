@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct TNode{
+    int data;
+    struct TNode *lch;
+    struct TNode *rch;
+}*root = NULL;
+
+struct QNode{
+    struct TNode *data;
+    struct QNode *next;
+}*head =NULL, *tail = NULL;
+
+void enQ(struct TNode *val){
+    struct QNode *newNode = (struct QNode*)malloc(sizeof(struct QNode));
+    
+    if(head == NULL){
+        head = newNode;
+        tail = newNode;
+    }else{
+        tail->next = newNode;
+        tail = newNode;
+    }
+}
+
+struct TNode *dQ(){
+    if(head == NULL){
+        printf("Empty!");
+    }else{
+        struct QNode *oldHead = head;
+        
+        head = head->next;
+        oldHead = NULL;
+        free(oldHead);
+    }
+}
+
+int Empty(){
+    if(head == NULL){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+void displayQ(){
+    struct QNode *current = head;
+    
+    while(current != NULL){
+        printf(" - > %p ", current);
+        current = current->next;
+    }
+}
+
+int main()
+{
+    
+
+    return 0;
+}
