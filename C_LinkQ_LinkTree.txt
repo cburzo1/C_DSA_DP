@@ -53,23 +53,29 @@ void addToTree(int val){
     
     if(root == NULL){
         root = newNode;
+        enQ(root);
     }else{
-        while(Empty() != 0){
+        while(Empty() != 1){
             struct TNode *p = dQ();
+            
             
             if(p->lch == NULL){
                 p->lch = newNode;
-                break;
-            }else{
+                printf("lch %p ", p);
+                enQ(p->lch);
+            } 
+            
+            if(p->lch == NULL){
                 p->rch = newNode;
-                break;
+                printf("rch %p ", p->rch);
+                enQ(p->rch);
             }
         }
     }
 }
 
 void displayT(){
-    p
+    
 }
 
 void displayQ(){
@@ -86,6 +92,12 @@ int main()
     int a = 5;
     
     addToTree(a);
+    addToTree(2);
+    addToTree(3);
+    
+    printf("%d", root->data);
+    printf("%d", root->lch->data);
+    //printf("%d", root->rch->data);
 
     return 0;
 }
