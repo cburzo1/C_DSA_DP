@@ -1,6 +1,110 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
 struct Node{
-	int state;
-	struct Node *parent;
-	int action; //A set of actions represented by unique integer, perhaps?
-	int path_cost;
+    int state;
+    struct Node *parent;
+    int action;
+    int action_cost;
 };
+
+struct PriorityQueue{
+    int size;
+    int cap;
+    int front;
+    int back;
+    int *PQ;
+};
+
+void initPQ(struct PriorityQueue *Q, int val){
+    Q->size = 0;
+    Q->cap = val;
+    Q->front = 0;
+    Q->back = 0;
+    Q->PQ = (int *)malloc(sizeof(int) * Q->cap);
+}
+
+void insertPQ(struct PriorityQueue *Q, int val){
+    if(Q->size < Q->cap){
+        Q->back += 1;
+        Q->PQ[Q->size] = val;
+        
+        int v = Q->size + 1;
+        
+        //printf(" %f ", v);
+        
+        //printf(" %f ", ceil(v /2));
+        
+        if(ceil(v % 2) == 0){
+            //printf("zero");
+            // We want to see what Q->PQ[v] and Q->PQ[v] output
+            /*while(Q->PQ[v] < Q->PQ[v]){
+                int temp = Q->PQ[v];
+                Q->PQ[v] = Q->PQ[v/2];
+                Q->PQ[v/2] = temp;
+            }*/
+        }else{
+            //printf(" NOT zero ");
+            /*while(Q->PQ[v] < Q->PQ[v/2 - 1]){
+                int temp = Q->PQ[v];
+                Q->PQ[v] = Q->PQ[v/2 - 1];
+                Q->PQ[v/2 - 1] = temp;
+            }*/
+        }
+        
+        Q->size += 1;
+    }else{
+        printf("cannot append more");
+    }
+}
+
+void unshiftPQ(struct PriorityQueue *Q){
+    if(Q->size > 0){
+        for(int i = Q->front; i < Q->size; i++){
+            Q->PQ[i] = Q->PQ[i + 1];
+        }
+        Q->back -= 1;
+        Q->size -= 1;
+    }else{
+        printf("cannot unshift more");
+    }
+}
+
+void displayPQ(struct PriorityQueue *Q){
+    for(int i = 0; i < Q->cap; i++){
+        printf("%d", *((*Q).PQ + i));
+    }
+}
+
+int main()
+{
+    int actionList[5] = {0,1,2,3,4};
+    
+    int graph [6][6] = {
+        {0 , -1, 13, -1, -1, -1},
+        {-1,  0,  8,  1,  4, -1},
+        {13,  8,  0, -1,  6, -1},
+        {-1,  1, -1,  0, -1, -1},
+        {-1,  4,  6, -1,  0, 11},
+        {-1, -1, -1, -1, 11,  0}
+    };
+    
+    struct PriorityQueue pq;
+    
+    initPQ(&pq, 6);
+    
+    //printf(" %d ", pq.size + 1);
+    
+    insertPQ(&pq, 3);
+    
+    insertPQ(&pq, 4);
+    
+    //insertPQ(&pq, 2);
+    
+    displayPQ(&pq);
+
+    //printf(" %d ", pq.size + 1);
+
+    return 0;
+}
