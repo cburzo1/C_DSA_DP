@@ -61,13 +61,15 @@ void addToTree(int val){
             
             if(p->lch == NULL){
                 p->lch = newNode;
-                printf("lch %p ", p);
+                //printf("lch %p ", p);
+            }else{
                 enQ(p->lch);
-            } 
+            }
             
-            if(p->lch == NULL){
+            if(p->rch == NULL){
                 p->rch = newNode;
                 printf("rch %p ", p->rch);
+            }else{
                 enQ(p->rch);
             }
         }
@@ -97,7 +99,7 @@ int main()
     
     printf("%d", root->data);
     printf("%d", root->lch->data);
-    //printf("%d", root->rch->data);
+    printf("%d", root->rch->data);
 
     return 0;
 }
